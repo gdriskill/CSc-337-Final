@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <title>Click Reaction Game</title>
+    <script src="jquery.js"></script>
+    <script src="code.js"></script>
+</head>
+<body onload="$('#returnButton').hide();">
+    <div class="directions"><h3>EEK! Click the spiders to get rid of them</h3></div>
+    <button type="button" id="startButton" onclick="startGame(this);">Start</button>
+    <div id="message"></div>
+    <div id="results"></div>
+    <button type="button" id="returnButton" onclick="returnToGame();">Return to main game</button>
+    <div id="gameArea"></div>
+</body>
+</html>
