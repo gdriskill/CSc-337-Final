@@ -1,0 +1,190 @@
+
+
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<html lang="en">
+
+<head><meta charset='UTF-8'>
+    <title>Marketplace</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <!--<script src='clientcode.js'></script>-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" 
+    integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href= "style.css" type="text/css">
+
+</head>
+
+
+<body>
+    <h2 id='header'>Marketplace</h2>
+
+    <div class='row' style='padding: 20px'>
+
+        <div class = 'col-6'>
+            <form id='getmyitmsfrm' name='getmyitmsfrm' method='get' action='/get/my/items/'>  <!-- change action -->  
+                <button class='btn btn-primary' type="submit" id='myitmbtn' name='myitmbtn'>Get My Items</button>
+            </form>
+            <div class='card' style='margin-top: 25px;'>
+                <div class="card-header">Inventory</div>
+                <div class="card-body">
+                    <div id='mysearchresults' class="display-results" ></div>
+                </div>
+            </div>
+        </div>
+
+        <div class = 'col-6'>
+            <form id='getothritmsfrm' name='getothritmsfrm' method='get' action='/get/items/'>  <!-- change action -->  
+                <button class='btn btn-primary' type="submit" id='othritmbtn' name='othritmbtn'>Get Other's Items</button>
+            </form>
+            <div class='card' style='margin-top: 25px;'>
+                <div class="card-header">Items to trade</div>
+                <div class="card-body">
+                    <div id='othersearchresults' class="display-results" ></div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</body>
+
+
+<script>
+    $( document ).ready(function() {
+    // This defaults the reloading of the page to route to the sumbit()
+    //function. This occurs for each form
+
+    console.log("ready");
+
+    $("#getothritmsfrm").submit(function (event) {
+        event.preventDefault();
+        submittoSearchRes("getothritmsfrm" , 'other');	
+    }); 
+    $("#getmyitmsfrm").submit(function (event) {
+        event.preventDefault();
+        submittoSearchRes("getmyitmsfrm", 'my');	
+    }); 
+
+    
+    })
+
+
+function submittoSearchRes(id, myorother){ 
+    // This function makes an AJAX request which sumbits the given 
+    // form to the server with the action and method of the requested 
+    //function. It will receive a response from the server and converts this to a 
+    //JSON string which is posted on the same html page as the form.
+
+    console.log('submittosearchres()')
+
+
+    var post_url = $("#" + id).attr("action"); //get action url from the form 
+    var request_method = $("#" + id).attr("method"); //GET/POST method
+    var form_data = $("#" + id).serialize(); //get form info - puts it into AJAX form 
+
+    $.ajax({
+    url : post_url,
+    type: request_method,
+    data : form_data
+    }).done(function(response){ 
+    console.log("ajax");
+    //var str = JSON.stringify(response);
+    var str = response
+    console.log("response is:" + str);
+    if(myorother == 'other'){
+        jsonStrtoHtml(str)
+    };
+    if(myorother == 'my'){
+        $("#mysearchresults").html(str)
+    };
+    //("#searchresults").html(str);
+    });  
+
+}
+
+
+function jsonStrtoHtml(jsonstrarr){
+    console.log('JSON str to html' + jsonstrarr);
+
+    //var responjsonstrarrse = jsonstrarr I feel like it should be thisJSON.parse(jsonstrarr) no s
+    var masterstr = ''
+    buttonnum = 1
+    for(const jsonstr of jsonstrarr){
+        console.log('jsonstr is:' + jsonstr)
+        var type = jsonstr.type;
+        var user = jsonstr.user;
+        var objid = JSON.stringify(jsonstr._id);
+
+
+        var htmlinsert = 'button id=\'tradebutton' + buttonnum + '\'' + ' onClick=tradebuttononclick(' + buttonnum + ','  + '\'' +  type + '\'' + ',' + '\'' + user + '\'' +')';
+        buttonnum =  buttonnum + 1
+        console.log('html insert is ' + htmlinsert)
+        var str = '<h3>' + type + '</h3>' +'<div>' + 'Owned by: ' + user + '</div>' + '<' + htmlinsert+ '> Trade </' + htmlinsert + '>' ;
+
+        masterstr += str;
+    }
+
+    $("#othersearchresults").html(masterstr); 
+
+    ///for( var jsonstr in jsonstrarr ){ }
+
+}
+
+
+
+function tradebuttononclick(buttonnum, type, username){ // need to add change to database in item and add to user purchases
+    console.log('made it to trade button click')
+
+
+    _data = {
+        type: type,
+        user: username
+    }
+    console.log(_data.type)
+    console.log(_data.user)
+
+
+
+    var post_url = "/do/trade/"; //get action url from the form 
+    var request_method = "post"; //GET/POST method
+    $.ajax({
+    url : post_url,
+    type: request_method,
+    data: _data, // try without JSON stringify
+    dataType:'json',
+    }).done(function(response){ 
+        console.log('response is: ' + response)
+        if(response != '1'){
+            console.log('response is false')
+            window.alert('Need item to trade');
+        }
+        else{
+        console.log("Trade completed");
+        }
+    window.location.reload()
+    });  
+
+    //NOW REFRESH PAGE
+
+    };
+
+
+</script>
+
+
+</html>
+
+
+
+

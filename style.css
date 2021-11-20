@@ -1,0 +1,31 @@
+
+body{
+    background-color:darkslateblue;
+    color:cornsilk;
+}
+
+.menu-button{
+    margin-top: 10px;
+}
+
+
+.card{
+    margin-top: -90px;
+    max-height: 500px;
+    overflow-y: scroll;
+    color:mediumblue;
+    
+}
+
+
+
+#header{
+    text-align: center; 
+    margin-top: 40px;
+    color:cornsilk;
+}
+
+button{
+    background-color:lightsteelblue;
+    color:mediumblue;
+}
