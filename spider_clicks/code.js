@@ -101,6 +101,6 @@ function endGame(){
  * Closes the window, so user returns to main game.
  */
 function returnToGame(){
-    // change window to the main game or close window?
-    Window.close();
+     //TODO how do you close a window/ send user back to game???
+    alert('still need to implement this lolz');
 }

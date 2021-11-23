@@ -15,7 +15,35 @@ const solution = [
     [null, null,null,null,null,null,"o",null,null,null,null,null,null,null,null],
     [null, null,null,null,null,"i","n","f","i","n","i","t","y",null,null]
 ];
+var elaspedTime = 0;
 
+function start(){
+    startTime = Date.now()
+    setInterval( function (){
+        elaspedTime = Date.now() - startTime;
+        updateClock(elaspedTime);
+    }, 10);
+}
+
+function updateClock(time){
+    let decimalHours = time/3600000;
+    let hours = Math.floor(decimalHours);
+    let decimalMins = (decimalHours - hours)*60;
+    let mins = Math.floor(decimalMins);
+    let decimalSec = (decimalMins - mins) * 60;
+    let secs = Math.floor(decimalSec);
+    let decimalMS = (decimalSec - secs) * 60;
+    let millis = Math.floor(decimalMS);
+
+    hh = hours.toString().padStart(2, "0");
+    mm = mins.toString().padStart(2, "0");
+    ss = secs.toString().padStart(2, "0");
+    ms = millis.toString().padStart(2, "0");
+
+    timeString = `${hh}:${mm}:${ss}.${ms}`;
+
+    $('#time').text(timeString);
+}
 
 function checkBoard(){
     correct = 0;
@@ -32,6 +60,21 @@ function checkBoard(){
         }
         total ++;
     })
-    percent = correct/total *100;
-    $("#results").text(percent);
+     
+    // Player solved the crossword
+    if(correct == total){
+        score = (600000 - elaspedTime)/60000;
+        $('#results').text("Correct Solution! You're score is " + score);
+        //TODO send score back to server
+    }
+    // Player didn't solve crossword
+    else{
+        percent = correct/total*100 + '%';
+        $('#results').text('Not quite... You\'re '+ percent + ' correct');
+    }
+}
+
+function returnToGame(){
+    //TODO how do you close a window/ send user back to game???
+    alert('still need to implement this lolz');
 }
