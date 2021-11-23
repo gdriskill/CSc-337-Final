@@ -1,0 +1,166 @@
+#thought{
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 1%;
+    padding-left: 2%;
+}
+
+#action{
+    color: rgba(0, 255, 0, 0.3);
+
+    margin-bottom: 1%;
+}
+
+#saying{
+color: rgba(255, 0, 0, 0.6);
+    margin-bottom: 1%;
+}
+body{
+    background-color: #1a0606;
+}
+img{
+    width: 100%;
+    display: inline;
+    left:0;
+    opacity: 100%;
+    z-index: 10;
+    position: absolute;
+}
+
+.imageBox:before {
+    content: "";
+    float: left;
+    padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+
+
+#textArea:before {
+    content: "";
+    float: left;
+    padding-top: 100%; 	/* initial ratio of 1:1*/
+}
+
+
+
+.select:before {
+    content: "";
+    float: left;
+    padding-top: 70%; 	/* initial ratio of 1:1*/
+}
+
+#gameplayArea{
+
+    width: 40%;
+    position: relative;
+    display: flex;
+    align-content: flex-start;
+    flex-wrap: wrap;
+
+    border-color: rgba(0, 0, 0, .7);
+    border-style: solid;
+
+    border-width: 5px;
+
+}
+#items{
+    border-color: rgba(0, 0, 0, .7);
+    border-bottom-style: solid;
+    border-width: 5px;
+    width: 100%;
+    table-layout: fixed;
+    display: table;
+    background-color: rgba(0, 0, 0, 0.2);
+    height: 20px;
+
+}
+#imageParent{
+    display: flex;
+    image-rendering: pixelated;
+    width: 100%;
+    height: auto;
+    position: relative;
+    align-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.gap{
+    width: 16%;
+    display: table-cell;
+}
+.select{
+    color: rgba(255, 255, 255, 0.7);
+    display: table-cell;
+    text-align: center;
+    height: 20%;
+    background-color: rgba(0, 0, 0, .5);
+
+}
+
+
+/* Add a thumb */
+#chatBox::-webkit-scrollbar-thumb {
+    background: #000;
+}
+
+
+#textArea{
+    position: absolute;
+    right:10%;
+    margin: auto;
+    height: auto;
+    width: 40%;
+    background-color: rgba(0, 0, 0, .4);
+}
+#chatBox{
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: inline;
+    padding: 1%;
+    width: 90%;
+    height: 80%;
+
+    font-size: 1.5vw;
+    margin: 2%;
+    border-width: 5px;
+border-style: solid;
+    scrollbar-color:  green;
+    overflow-y: auto;
+
+}
+
+#userInput{
+    position: absolute;
+    display: inline-block;
+    bottom: 0;
+    margin: 2%;
+    height: 5%;
+    width: 80%;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(0, 0, 0, 1);
+    border-width: 5px;
+    font-size: 1.5vw;
+}
+
+
+
+.break{
+    flex-basis: 100%;
+    height: 0;
+    width: 0;
+}
+.imageBox{
+    opacity: 0%;
+    z-index: 11;
+    display: inline;
+    color: white;
+    font-size: 20px;
+    flex-wrap: wrap;
+
+    padding: 0;
+    /*width: 62.5px;*/
+    /*height: 62.5px;*/
+
+    width: 12.5%;
+    height: 12.5%;
+
+    text-align: center;
+}

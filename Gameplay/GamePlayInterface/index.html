@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="stylesheet.css">
+</head>
+<body>
+<div id="textArea">
+<div id="chatBox"></div>
+<input type="text" id="userInput">
+</div>
+<div id="gameplayArea">
+    <div id="items">
+        <div class = "gap"></div>
+        <div class = "select" id="look" onclick="setSelection(id);">Look</div>
+        <div class = "gap"></div>
+        <div class = "select" id="interact" onclick="setSelection(id);">Interact</div>
+        <div class = "gap"></div>
+        <div class = "select" id="move" onclick="setSelection(id);">Move</div>
+        <div class = "gap"></div>
+    </div>
+<div id="imageParent">
+    <img id ="img", src="../images/test.png">
+    <div class ="imageBox" id="i1">1</div>
+    <div class ="imageBox" id="i2">2</div>
+    <div class ="imageBox" id="i3">3</div>
+    <div class ="imageBox" id="i4">4</div>
+    <div class ="imageBox" id="i5">5</div>
+    <div class ="imageBox" id="i6">6</div>
+    <div class ="imageBox" id="i7">7</div>
+    <div class ="imageBox" id="i8">8</div>
+    <div class ="imageBox" id="i9">9</div>
+    <div class ="imageBox" id="i10">10</div>
+    <div class ="imageBox" id="i11">11</div>
+    <div class ="imageBox" id="i12">12</div>
+    <div class ="imageBox" id="i13">13</div>
+    <div class ="imageBox" id="i14">14</div>
+    <div class ="imageBox" id="i15">15</div>
+    <div class ="imageBox" id="i16">16</div>
+    <div class ="imageBox" id="i17">17</div>
+    <div class ="imageBox" id="i18">18</div>
+    <div class ="imageBox" id="i19">19</div>
+    <div class ="imageBox" id="i20">20</div>
+    <div class ="imageBox" id="i21">21</div>
+    <div class ="imageBox" id="i22">22</div>
+    <div class ="imageBox" id="i23">23</div>
+    <div class ="imageBox" id="i24">24</div>
+    <div class ="imageBox" id="i25">25</div>
+    <div class ="imageBox" id="i26">26</div>
+    <div class ="imageBox" id="i27">27</div>
+    <div class ="imageBox" id="i28">28</div>
+    <div class ="imageBox" id="i29">29</div>
+    <div class ="imageBox" id="i30">30</div>
+    <div class ="imageBox" id="i31">31</div>
+    <div class ="imageBox" id="i32">32</div>
+    <div class ="imageBox" id="i33">33</div>
+    <div class ="imageBox" id="i34">34</div>
+    <div class ="imageBox" id="i35">35</div>
+    <div class ="imageBox" id="i36">36</div>
+    <div class ="imageBox" id="i37">37</div>
+    <div class ="imageBox" id="i38">38</div>
+    <div class ="imageBox" id="i39">39</div>
+    <div class ="imageBox" id="i40">40</div>
+    <div class ="imageBox" id="i41">41</div>
+    <div class ="imageBox" id="i42">42</div>
+    <div class ="imageBox" id="i43">43</div>
+    <div class ="imageBox" id="i44">44</div>
+    <div class ="imageBox" id="i45">45</div>
+    <div class ="imageBox" id="i46">46</div>
+    <div class ="imageBox" id="i47">47</div>
+    <div class ="imageBox" id="i48">48</div>
+    <div class ="imageBox" id="i49">49</div>
+    <div class ="imageBox" id="i50">50</div>
+    <div class ="imageBox" id="i51">51</div>
+    <div class ="imageBox" id="i52">52</div>
+    <div class ="imageBox" id="i53">53</div>
+    <div class ="imageBox" id="i54">54</div>
+    <div class ="imageBox" id="i55">55</div>
+    <div class ="imageBox" id="i56">56</div>
+    <div class ="imageBox" id="i57">57</div>
+    <div class ="imageBox" id="i58">58</div>
+    <div class ="imageBox" id="i59">59</div>
+    <div class ="imageBox" id="i60">60</div>
+    <div class ="imageBox" id="i61">61</div>
+    <div class ="imageBox" id="i62">62</div>
+    <div class ="imageBox" id="i63">63</div>
+    <div class ="imageBox" id="i64">64</div>
+</div>
+</div>
+</body>
+
+</html>
+
+<script>
+    window.onload = function() {
+        var anchors = document.getElementsByClassName('imageBox');
+        for(var i = 0; i < anchors.length; i++) {
+            var anchor = anchors[i];
+            anchor.setAttribute('onclick',"imageClick(id)");
+
+        }
+    }
+</script>
+
+
+<script src="../Locations/tempClass.js"></script>
+<script src="../Locations/testLocation.js"></script>
+<script src="../Locations/BarnClass.js"></script>
+<script src="../Locations/FrontHouseClass.js"></script>
+<script src="../UserController.js"></script>
+<script src="script.js"></script>
+
+<script src="testClass.js" onload="getInput();"></script>
+
