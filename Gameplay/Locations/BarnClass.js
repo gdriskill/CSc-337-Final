@@ -1,31 +1,51 @@
 class barn extends tempClass {
     name = "barn";
+    houseKey = inventory.getItemData("Front House Key");
+    bread = inventory.getItemData("Bread");
+    objects = [this.bread,this.houseKey,this.exit];
 
-    barnDoor = {id: ["barn door","right door"], locked: true, occupies: [1, 2]}
-    bread = {id: ["bread"], locked: true, pickedUp: false, occupies: [1, 2]}
-    objects = [this.bread,this.barnDoor];
-
-    image = "../images/FrontDoor.png";
-    
+    image = "../images/BarnInside.png";
     look(item){
         switch(item)
         {
             case(this.bread.id[0]):{
-                printData("Its bread",thought);
+                if(!inventory.hasItem(this.bread.id[0]))
+                {
+                    printData("Its a whole loaf of bread",thought);
+
+                }
                 break;
             }
+            case(this.houseKey.id[0]):
+            {
+                if(!inventory.hasItem(this.houseKey.id[0]))
+                {
+                    printData("It look like a key on the floor",thought);
+
+                }
+                break;
+            }
+
             case("default"):
             {
                 printData("Its an old wooden barn",thought);
-                if(!this.bread.pickedUp)
+                if(!inventory.hasItem(this.bread.id[0]))
                 {
                     printData("You look down and notice something strange",thought);
-                    printData("There is a single slice of bread on the ground.",thought);
+                    printData("There is a loaf of bread on the ground.",thought);
+                    if(!inventory.hasItem(this.houseKey.id[0]))
+                    {
+                        printData("You also see something shining",thought);
+                    }
                 }
                 else
                 {
-                    printData("There used to be a slice of bread on the ground.",thought);
+                    printData("There used to be a loaf of bread on the ground.",thought);
                     printData("Now its mine.",thought);
+                    if(!inventory.hasItem(this.houseKey.id[0]))
+                    {
+                        printData("You still see something shining on the floor",thought);
+                    }
                 }
                 break;
             }
@@ -35,37 +55,38 @@ class barn extends tempClass {
             }
         }
     }
+    move(location)
+    {
+        switch(location){
+            case("exit"):
+            {
+                printData("You leave the barn", action);
+                travel("outside");
+                break;
+            }
+            default:{
+                printMoveError();
+            }
+        }
+    }
     interact(item){
         switch(item)
         {
+            //Bread
             case(this.bread.id[0]):{
-                if(!this.bread.pickedUp)
-                {
-                    printData("You Picked Up The Bread",thought);
-                    this.bread.pickedUp = true;
-                    return this.bread;
-                }
-                else
-                {
-                    printData("You already picked up the bread in this room",thought);
-                }
-
+                inventory.pickUp(this.bread.id[0]);
                 break;
             }
-            case(this.barnDoor.id[0]):
-            {
-                printData("You leave the barn", thought);
-                travel("outside");
+            case(this.houseKey.id[0]):{
+                inventory.pickUp(this.houseKey.id[0]);
                 break;
             }
             default:
             {
-                printData("I don't see that item", thought);
+                printPickUpError();
                 break;
             }
         }
 
     }
-
-
 }

@@ -20,13 +20,15 @@ class userController
         }
         return false;
     }
+
+    //Gets object at location
     lookLocation(objects, imageLocation)
     {
         for(let i = 0; i < objects.length; i++)
         {
             for(let j = 0; j < objects[i].occupies.length; j++)
             {
-                if(imageLocation ===(objects[i].occupies[j]))
+                if(imageLocation ===(objects[i].occupies[j]) && (!objects[i].pickedUp))
                 {
                     return(objects[i].id[0]);
                 }
