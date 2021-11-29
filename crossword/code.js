@@ -1,7 +1,20 @@
+/**
+ * File name: code.js
+ * Project: CSC 337 final
+ * Purpose: The javascript code for the crossword game. On loading the 
+ *  page, a timer is started which is used to calculate a user's score
+ *  after they solve the puzzle. When the check board button is clicked,
+ *  the program compares each square the user filled to the correct 
+ *  solution and calculates what percentage of the squares are correct. 
+ *  if the board is perfect, the score is send back to the server and 
+ *  stored in the User's data.
+ */
+
+// solved board
 const solution = [
     [null, null,null,null,null,null,null,null,null,null,null,"f",null,null,null],
     [null, null,null,null,null,null,null,null,null,null,null,"r",null,null,null],
-    ["t", null,null,null,null,null,"r",null,null,null,null,"e",null,null,null],
+    ["t", null,null,null,null,"t","r","i","c","k",null,"e",null,null,null],
     ["i", null,null,null,null,null,"e",null,null,null,null,"e",null,null,null],
     ["m", null, null, null, null, null,"i",,null,null,null,"w",null,null,null],
     ["e", "x", "i", "s", "t", "e", "n", "t", "i", "a", "l", "i", "s", "m",null],
@@ -16,15 +29,24 @@ const solution = [
     [null, null,null,null,null,"i","n","f","i","n","i","t","y",null,null]
 ];
 var elaspedTime = 0;
+var score = 0;
 
+/**
+ * Starts the on screen timer
+ */
 function start(){
     startTime = Date.now()
-    setInterval( function (){
+    setInterval(function (){
         elaspedTime = Date.now() - startTime;
         updateClock(elaspedTime);
     }, 10);
 }
 
+/**
+ * Formats milliseconds to hours, minutes and seconds. Updates the time on 
+ * screen.
+ * @param {*} time   the elasped time in milliseconds 
+ */
 function updateClock(time){
     let decimalHours = time/3600000;
     let hours = Math.floor(decimalHours);
@@ -45,6 +67,13 @@ function updateClock(time){
     $('#time').text(timeString);
 }
 
+/**
+ * Checks the contents of each input square against the correct solution.
+ * If the solution is incorrect, the percentage of the board that's correct
+ * is shown to the user and the score is updated to be that percent.
+ * If the solution is correct, the user is told and a score is calculated 
+ * based on the time they took to complete.
+ */
 function checkBoard(){
     correct = 0;
     total = 0
@@ -55,7 +84,10 @@ function checkBoard(){
         row = parseInt(idSplit[0]);
         col = parseInt(idSplit[1]);
         expected = solution[row][col];
-        if(expected == input.value){
+        console.log(input.value.toLowerCase() + " " 
+        + expected);
+        if(expected === input.value.toLowerCase()){
+            console.log("nice!");
             correct ++;
         }
         total ++;
@@ -64,17 +96,24 @@ function checkBoard(){
     // Player solved the crossword
     if(correct == total){
         score = (600000 - elaspedTime)/60000;
+        if(score<100)
+            score = 100;
         $('#results').text("Correct Solution! You're score is " + score);
-        //TODO send score back to server
+        $('#checkButton').remove();
     }
     // Player didn't solve crossword
     else{
         percent = correct/total*100 + '%';
-        $('#results').text('Not quite... You\'re '+ percent + ' correct');
+        score = Math.floor(percent);
+        $('#results').text('Keep trying... You\'re '+ percent + ' correct');
     }
 }
 
+/**
+ * Sends the user's score back to the server and closed the window
+ */
 function returnToGame(){
     //TODO how do you close a window/ send user back to game???
+    //TODO send score back to server
     alert('still need to implement this lolz');
 }

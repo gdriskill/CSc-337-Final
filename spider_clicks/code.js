@@ -19,7 +19,7 @@ let score = 0;
  * area div. Increments the total count of spiders.
  */
 function newSpider(){
-    var spider = $('<span onclick="hit(this);"><img src="spider.jpg" alt="spider"></span>')
+    var spider = $('<span onclick="hit(this);"><img src="spider.png" alt="spider"></span>')
     $('#gameArea').append(spider);
     let maxHeight = $('#gameArea').height();
     let maxWidth = $('#gameArea').width();

@@ -1,3 +1,12 @@
+<!--
+File name: index.html
+Project: CSC 337 final
+Purpose: Html script for cross word mini game. Crossword board
+    is comprised of text input boxes inside a table. The page
+    also include a timer, hints for down and across words, a 
+    button for checking the board and a button for exiting the
+    game.
+-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,96 +17,104 @@
     <script src="code.js"></script>
 </head>
 <body onload="start();">
-    <div id="time">00:00:00</div>
+    <div id="header">
+        Super Spooky Crossword Puzzle
+        <div id="time">00:00:00</div>
+    </div>
     <div id="board">
         <table>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input type="text" maxlength="1" id="0,11"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="0,11">
+                    <label for="0,11">1</label></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="1,11"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td><input type="text" maxlength="1" id="2,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input type="text" maxlength="1" id="2,5"></td>
-                <td><input type="text" maxlength="1" id="2,6"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="2,0">
+                    <label for="2,0">2</label></td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="2,5">
+                    <label for="0,11">3</label></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="2,6">
+                    <label for="2,6">4</label></td></td>
                 <td><input type="text" maxlength="1" id="2,7"></td>
                 <td><input type="text" maxlength="1" id="2,8"></td>
                 <td><input type="text" maxlength="1" id="2,9"></td>
-                <td></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="2,11"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
                 <td><input type="text" maxlength="1" id="3,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="3,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="3,11"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
                 <td><input type="text" maxlength="1" id="4,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="4,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="4,11"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td><input type="text" maxlength="1" id="5,0"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="5,0">
+                    <label for="5,0">5</label></td>
                 <td><input type="text" maxlength="1" id="5,1"></td>
                 <td><input type="text" maxlength="1" id="5,2"></td>
                 <td><input type="text" maxlength="1" id="5,3"></td>
@@ -111,117 +128,119 @@
                 <td><input type="text" maxlength="1" id="5,11"></td>
                 <td><input type="text" maxlength="1" id="5,12"></td>
                 <td><input type="text" maxlength="1" id="5,13"></td>
-                <td></td>
+                <td class="blank"></td>
             </tr>
             <tr>
                 <td><input type="text" maxlength="1" id="6,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="6,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="6,11"></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
                 <td><input type="text" maxlength="1" id="7,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="7,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input type="text" maxlength="1" id="7,11"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="7,11">
+                    <label for="5,0">6</label></td></td>
                 <td><input type="text" maxlength="1" id="7,12"></td>
                 <td><input type="text" maxlength="1" id="7,13"></td>
                 <td><input type="text" maxlength="1" id="7,14"></td>
             </tr>
             <tr>
                 <td><input type="text" maxlength="1" id="8,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1"  id="8,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
                 <td><input type="text" maxlength="1" id="9,0"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="9,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="10,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="11,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input type="text" maxlength="1" id="12,5"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="12,5">
+                    <label for="12,5">7</label></td></td>
                 <td><input type="text" maxlength="1" id="12,6"></td>
                 <td><input type="text" maxlength="1" id="12,7"></td>
                 <td><input type="text" maxlength="1" id="12,8"></td>
@@ -230,32 +249,33 @@
                 <td><input type="text" maxlength="1" id="12,11"></td>
                 <td><input type="text" maxlength="1" id="12,12"></td>
                 <td><input type="text" maxlength="1" id="12,13"></td>
-                <td></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
                 <td><input type="text" maxlength="1" id="13,6"></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td><input type="text" maxlength="1" id="14,5"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
+                <td class="floating-label"><input type="text" maxlength="1" id="14,5">
+                    <label for="14,5">8</label></td></td>
                 <td><input type="text" maxlength="1" id="14,6"></td>
                 <td><input type="text" maxlength="1" id="14,7"></td>
                 <td><input type="text" maxlength="1" id="14,8"></td>
@@ -263,8 +283,8 @@
                 <td><input type="text" maxlength="1" id="14,10"></td>
                 <td><input type="text" maxlength="1" id="14,11"></td>
                 <td><input type="text" maxlength="1" id="14,12"></td>
-                <td></td>
-                <td></td>
+                <td class="blank"></td>
+                <td class="blank"></td>
             </tr>
         </table>
     </div>
@@ -285,8 +305,8 @@
         </div>
     </div>
     <div id="buttons">
-        <button onclick="checkBoard();">check</button>
-        <button onclick="returnToGame();">end game</button>   
+        <button id="checkButton" onclick="checkBoard();">Check</button>
+        <button onclick="returnToGame();">End Game</button>   
     </div>
     <div id="results"></div>
 </body>

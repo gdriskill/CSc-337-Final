@@ -3,59 +3,44 @@ File name: style.css
 Project: CSC 337 final
 Purpose: The styling for the spider clicking mini-game.
 */
-.box{
-    position: relative;
-    border-radius: 50%;
-    background-color: red;
-    width: 100px;
-    height: 100px;
-}
 
 body{
     text-align: center;
-    font-size: 1.5em;
-    font-family: Arial, Helvetica, sans-serif;
-    line-height: 1.5;
+    font-family: Garamond;
+    font-size: 200%;
+    background-color: #3d3b3b6b;
+}
+
+.directions{
+    color: white;
 }
 
 button{
     font-size: 1.5rem;
-    margin: 25px;
-    background-color: purple;
+    margin: 15px;
+    background-color: red;
     border: none;
     color: white;
     border-radius: 25px;
-    box-shadow: 1em;
     cursor: pointer;
 }
 
-#winner{
-    color: green;
-}
-
-#loser{
-    color: red;
-}
-
-.results{
+#results, #message{
     font-weight: bold;
+    color:red;
 }
 
 #gameArea{
     position: fixed;
     bottom: 0;
-    height: 80%;
+    height: 70%;
     width: 100%;
-}
-
-#poop{
-    position: absolute;
-    left: 10px;
-    top: 15px;
-    margin: 5px;
 }
 
 img{
     height: 50px;
     width: 50px;
+    cursor: pointer;
+    display: inline-block;
+    background-color: transparent;
 }
