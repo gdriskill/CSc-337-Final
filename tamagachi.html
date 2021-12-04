@@ -1,0 +1,175 @@
+
+
+
+<!DOCTYPE html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<html lang="en">
+
+<head><meta charset='UTF-8'>
+    <title>Tamagachi</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" 
+    rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" 
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js" 
+    integrity="sha384-qlmct0AOBiA2VPZkMY3+2WqkHtIQ9lSdAsAn5RUJD/3vA5MKDgSGcdmIv4ycVxyn" crossorigin="anonymous"></script>
+
+    
+    <link rel="stylesheet" href= "tamagachistyle.css" type="text/css">
+    <!--
+    <script src="tamagachi.js"></script>
+    -->
+
+
+</head>
+
+<body onload="gettimer();">
+
+
+    <div class='row' id='content'>
+        <div class= 'col-3' id='buttoncol'>
+            <form>
+                <label for='foodbtn'></label>
+                <button class="btn btn-outline-warning" type="reset" id='foodbtn' onClick=feedonclick() >Feed</button>
+                
+                <!--
+                <label for='playbtn'></label>
+                <button type='reset' id='playbtn'>Play</button>
+                -->
+
+            </form>
+        </div>
+
+        <div class= 'col-7' id='photodisplaycol'></div>
+
+        <div class= 'col-2' id='timercol'></div>
+
+
+
+    </div>
+
+    <a href='google.com'>google.com</a>
+
+
+<script>
+
+    function feedonclick(){
+        var feedtimestart = Date.now();
+        console.log('startfrom feedonclick is '+ feedtimestart);
+        var duration = 1440 * 60;
+
+        if (typeof mytimer != "undefined"){
+            myStopFunction(mytimer);
+
+            startTimer(feedtimestart , duration)}
+        else{
+            startTimer(feedtimestart, duration)}
+
+    }
+
+    function startTimer(starttime , duration){
+        var endtime = starttime + duration
+        mytimer = setInterval( function(){
+        console.log('starttime is:' + starttime)
+        console.log('endtimeis' + endtime)
+        timer = endtime- Date.now()
+        if(timer <= 0){
+            document.getElementById("photodisplaycol").innerHTML = 'your pet has died' // probs wrong syntax
+        }
+        else if(timer <= 5000){
+            document.getElementById("photodisplaycol").innerHTML = 'Care for your pet' // probs wrong syntax
+        }
+        else if(timer > 5000){
+            document.getElementById("photodisplaycol").innerHTML = 'your pet is alive' // probs wrong syntax
+        }
+        document.getElementById("timercol").innerHTML = timer
+
+    }, 1000)};
+
+    function myStopFunction(mytimer) {
+              clearInterval(mytimer);
+      };
+
+
+
+
+    $(window).on('unload', function(){
+        posttimer()
+    });
+
+
+function posttimer(){
+    timer = document.getElementById("timercol").innerHTML
+    console.log('window closed');
+        console.log('timer is' + timer);
+        console.log('timer string is' + toString(timer));
+
+        var _data = {
+                foodtimerwhenleft: timer,
+                playtimerwhenleft: timer,
+                timeexited: Date.now(),
+        };
+
+        //var data = JSON.stringify(_data);
+
+        console.log('data is:' + _data);
+        console.log('foodtimerwhenleft is:' + _data.foodtimerwhenleft);
+        console.log('playtimerwhenleft is:' + _data.playtimerwhenleft);
+        console.log('timeexited is:' + _data.timeexited);
+
+
+
+        var post_url = "/tamagachi/timer/" ;
+        post_url += "?foodtimerwhenleft=" + timer + "&playtimerwhenleft=" + timer + "&timeexited=" + Date.now();
+        navigator.sendBeacon(post_url, _data);
+    };
+
+
+function gettimer(){
+    var post_url = '/tamagachi/my/timer/'
+    var request_method = "get"; //GET/POST method
+    $.ajax({
+    url : post_url,
+    type: request_method,
+    }).done(function(response){ 
+    console.log("my timer is:");
+    console.log(response);
+    mysavedtimer = JSON.parse(response);
+    console.log(mysavedtimer)
+    var foodtimer = mysavedtimer.tamagachifoodtimer;
+    console.log('foodtimer: ' + foodtimer)
+    if(foodtimer != ''){
+        console.log('foodtimer is: ' + foodtimer);
+        savedtimer = parseInt(foodtimer);
+        timeexited = parseInt(mysavedtimer.timeexitedtamagachi);
+        timepassed = Date.now() - timeexited;
+        timeleftontimer = savedtimer-timepassed;
+        console.log('timelefton timer:' + timeleftontimer);
+
+
+        duration = timeleftontimer
+        starttime = Date.now();
+        startTimer(starttime , duration);
+
+
+    }
+
+
+
+    });  
+
+    }
+
+
+</script>
+
+
+
+</body>
+</html>
