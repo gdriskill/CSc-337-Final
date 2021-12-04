@@ -28,51 +28,14 @@ const solution = [
     [null, null,null,null,null,null,"o",null,null,null,null,null,null,null,null],
     [null, null,null,null,null,"i","n","f","i","n","i","t","y",null,null]
 ];
-var elaspedTime = 0;
+
 var score = 0;
-
-/**
- * Starts the on screen timer
- */
-function start(){
-    startTime = Date.now()
-    setInterval(function (){
-        elaspedTime = Date.now() - startTime;
-        updateClock(elaspedTime);
-    }, 10);
-}
-
-/**
- * Formats milliseconds to hours, minutes and seconds. Updates the time on 
- * screen.
- * @param {*} time   the elasped time in milliseconds 
- */
-function updateClock(time){
-    let decimalHours = time/3600000;
-    let hours = Math.floor(decimalHours);
-    let decimalMins = (decimalHours - hours)*60;
-    let mins = Math.floor(decimalMins);
-    let decimalSec = (decimalMins - mins) * 60;
-    let secs = Math.floor(decimalSec);
-    let decimalMS = (decimalSec - secs) * 60;
-    let millis = Math.floor(decimalMS);
-
-    hh = hours.toString().padStart(2, "0");
-    mm = mins.toString().padStart(2, "0");
-    ss = secs.toString().padStart(2, "0");
-    ms = millis.toString().padStart(2, "0");
-
-    timeString = `${hh}:${mm}:${ss}.${ms}`;
-
-    $('#time').text(timeString);
-}
 
 /**
  * Checks the contents of each input square against the correct solution.
  * If the solution is incorrect, the percentage of the board that's correct
- * is shown to the user and the score is updated to be that percent.
- * If the solution is correct, the user is told and a score is calculated 
- * based on the time they took to complete.
+ * is shown to the user.
+ * If the solution is correct, the user is told and check button is removed.
  */
 function checkBoard(){
     correct = 0;
@@ -95,25 +58,47 @@ function checkBoard(){
      
     // Player solved the crossword
     if(correct == total){
-        score = (600000 - elaspedTime)/60000;
-        if(score<100)
-            score = 100;
-        $('#results').text("Correct Solution! You're score is " + score);
+        score = 1;
+        $('#results').text("Correct Solution!");
         $('#checkButton').remove();
     }
     // Player didn't solve crossword
     else{
         percent = correct/total*100 + '%';
-        score = Math.floor(percent);
         $('#results').text('Keep trying... You\'re '+ percent + ' correct');
     }
 }
 
 /**
- * Sends the user's score back to the server and closed the window
+ * Sends the user's score back to the server and closes the window
  */
 function returnToGame(){
-    //TODO how do you close a window/ send user back to game???
-    //TODO send score back to server
-    alert('still need to implement this lolz');
+    // check board if score is zero, in case user solved puzzle but
+    // didn't click the check button
+    if(score==0){
+        checkBoard();
+    }
+
+    $("body").html("Game over. Exit this window.");
+    $("body").css("font-size", "200%");
+
+    // post score to server
+    _data = {
+        game: 'crossword',
+        score: score
+    };
+
+    var post_url = "/save/minigame/score/"; 
+    var request_method = "post";
+
+    $.ajax({
+        url : post_url,
+        type: request_method,
+        data: _data, 
+        dataType:'json',
+        }).done(function(response){
+            console.log('game data saved');
+        })
+
+    window.close();
 }
