@@ -92,7 +92,6 @@ function gamePlay(){
         updateClock(timeleft);
         if(timeleft==0 || count==0){
             inPlay = false;
-            console.log(':(');
             endGame();
         }
     }
@@ -131,10 +130,13 @@ function endGame(){
 }
 
 /**
- * Closes the window, so user returns to main game.
+ *  User returns to main game.
  */
 function returnToGame(){
-    $("body").html("Game over. Exit this window.");
-    $("body").css("font-size", "200%");
-    window.close();
+    $.ajax({
+        url : '/index',
+        type: 'get',
+        }).done(function(response){
+            console.log("back to main game");
+        })
 }

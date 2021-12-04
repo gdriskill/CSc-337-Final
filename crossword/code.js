@@ -47,10 +47,7 @@ function checkBoard(){
         row = parseInt(idSplit[0]);
         col = parseInt(idSplit[1]);
         expected = solution[row][col];
-        console.log(input.value.toLowerCase() + " " 
-        + expected);
         if(expected === input.value.toLowerCase()){
-            console.log("nice!");
             correct ++;
         }
         total ++;
@@ -70,7 +67,7 @@ function checkBoard(){
 }
 
 /**
- * Sends the user's score back to the server and closes the window
+ * Sends the user's score back to the server and sends user to main game
  */
 function returnToGame(){
     // check board if score is zero, in case user solved puzzle but
@@ -78,10 +75,6 @@ function returnToGame(){
     if(score==0){
         checkBoard();
     }
-
-    $("body").html("Game over. Exit this window.");
-    $("body").css("font-size", "200%");
-
     // post score to server
     _data = {
         game: 'crossword',
@@ -99,6 +92,11 @@ function returnToGame(){
         }).done(function(response){
             console.log('game data saved');
         })
-
-    window.close();
+    // send user back to main game
+    $.ajax({
+        url : '/index',
+        type: 'get',
+        }).done(function(response){
+            console.log("back to main game");
+        })
 }
