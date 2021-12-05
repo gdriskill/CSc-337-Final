@@ -118,6 +118,9 @@ function endGame(){
         game :'spiders',
         score : score
     }
+    
+    var post_url = "/save/minigame/score/"; 
+    var request_method = "post";
 
     $.ajax({
         url : post_url,
