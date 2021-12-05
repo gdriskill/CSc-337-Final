@@ -1,5 +1,6 @@
 
-
+_baseurl = 'http://137.184.33.197:3001'
+baseurl = 'http://localhost:3001/'
 
 const mongoose = require('mongoose');
 const express = require('express');
@@ -16,12 +17,18 @@ const app = express();
 app.use(express.json());
 app.use(parser.json() );
 app.use(parser.urlencoded({ extended: true })); 
-app.use(express.static(__dirname + '/public_html')); 
-app.use(express.static(__dirname + '/public_html' + '/tiktakto')); 
-app.use(express.static(__dirname + '/public_html' + '/marketplace')); 
-app.use(express.static(__dirname + '/public_html' + '/tamagachi')); 
+app.use(express.static('public_html'));
+app.use(express.static('Gameplay'));
+app.use(express.static('Gameplay/Locations'));
+app.use(express.static('Gameplay/images'));
 
+//app.use(express.static('Gameplay/'));
+//app.use(express.static(__dirname + '/Gameplay/index.html'));
+app.use(express.static(__dirname + '/public_html' + '/tiktakto'));
+app.use(express.static(__dirname + '/public_html' + '/marketplace'));
+//app.use(express.static(__dirname + '/public_html' + '/tamagachi'));
 
+//get("/*", (req, res) => {res.redirect("/");});
 
 
 //app.use(express.static(__dirname));
@@ -76,31 +83,6 @@ var user = mongoose.model('users', userSchema );
 
 
 
-
-
-app.get('/market', (req, res) => {
-    console.log('/market')
-    session=req.session;
-    session.username = 'bena' // REPLACE W /login/user, req.body.username
-    res.sendFile(__dirname + "/public_html/marketplace/marketplace.html");
-});
-
-
-app.get('/tamagachi', (req, res) => {
-    console.log('/tamagachi')
-    session=req.session;
-    session.username = 'bena' // REPLACE W /login/user, req.body.username
-    res.sendFile(__dirname + "/public_html/tamagachi/tamagachi.html");
-});
-
-app.get('/tiktaktoe', (req, res) => {
-    console.log('/tiktaktoe')
-    session=req.session;
-    session.username = 'bena' // REPLACE W /login/user, req.body.username
-    res.sendFile(__dirname + "/public_html/tiktakto/tiktaktoe.html");
-});
-
-
 app.get('/get/my/book/', async function (req, res) {
     //gets the my item list from the database sends this to the client
     var rtn = '';
@@ -115,6 +97,21 @@ app.get('/get/my/book/', async function (req, res) {
 
     res.send(itm);
 });
+
+app.post('/post/book/', async function (req, res) {
+    //gets the full item list without my items from the database sends this to the client
+
+    var myusername = session.username
+    let mydata = req.body.Book;
+
+    db.collection('users').updateOne(
+        { name: myusername},
+        { $set: {'book' : mydata}} // need to index into object
+    );
+    res.send("saved");
+});
+
+
 
 
 
@@ -232,12 +229,15 @@ app.get('/tamagachi/my/timer/', async function (req, res){
     var item = await db.collection("users").findOne({"name": user});
     console.log(item);
 
-    console.log('tamagachi timer is:');
-    console.log(item.tamagachitimer)
-    mytamtimer = JSON.stringify(item.tamagachitimer)
+    if(item.tamagachitimer != null){
+
+        console.log('tamagachi timer is:');
+        console.log(item.tamagachitimer)
+        mytamtimer = JSON.stringify(item.tamagachitimer)
 
 
-    res.end(mytamtimer)
+        res.end(mytamtimer)
+    }
 
 
 });
@@ -249,17 +249,12 @@ app.get('/load/game/data', async function (req, res){
     session=req.session
     myusername = session.username
 
-    var user = await db.collection("users").findOne({"name": user});
-    console.log(data);
+    var user = await db.collection("users").findOne({"name": myusername});
 
     console.log('my data is:');
     console.log(user.mydata)
-    mydata = JSON.stringify(user.mydata)
-
-
+    mydata = user.mydata;
     res.end(mydata)
-
-
 });
 
 app.post('/save/game/', async function (req, res) {
@@ -267,18 +262,182 @@ app.post('/save/game/', async function (req, res) {
 
     session=req.session
     myusername = session.username
-    mydata = req.body.params
+    let mydata = req.body.playerData;
 
     db.collection('users').updateOne(
-        { name: user},
+        { name: myusername},
         { $set: {'mydata' : mydata}} // need to index into object
+    );
+    res.send("saved");
+});
+
+
+
+
+
+app.get('/tamagachi', (req, res) => {
+    console.log('/tamagachi')
+    session=req.session;
+    username = session.username // REPLACE W /login/user, req.body.username
+    res.sendFile(__dirname + "/public_html/tamagachi/tamagachi.html");
+});
+
+
+
+
+
+// NEW STUFF BELOW:::
+
+
+
+
+
+app.get('/market', (req, res) => {
+    console.log('/market')
+   // session=req.session;
+   // session.username = req.session // REPLACE W /login/user, req.body.username
+    res.sendFile(__dirname + "/public_html/marketplace/marketplace.html");
+});
+
+
+app.get('/tiktaktoe', (req, res) => {
+    //window.location.href = '/public_html/tiktakto/tiktaktoe.html'
+    console.log('/tiktaktoe')
+ // REPLACE W /login/user, req.body.username
+    res.sendFile(__dirname + "/public_html/tiktakto/tiktaktoe.html");
+});
+
+/*
+app.get('/gameplay', (req, res) => {
+    //window.location.href = '/public_html/tiktakto/tiktaktoe.html'
+    console.log('/tiktaktoe')
+    // REPLACE W /login/user, req.body.username
+    res.sendFile(__dirname + "/Gameplay/index.html");
+});
+ */
+
+
+app.get('/*', (req, res) => {
+    console.log('/index')
+    session=req.session;
+    if(session.username !== undefined){
+        console.log('userfound')
+        res.sendFile(__dirname+"/Gameplay/index.html"); // if session exists:  /gameplay/idex.html
+    }
+    else{
+        console.log('user not found')
+        res.sendFile(__dirname + "/public_html/index.html"); //If session doesnt exist: login page
+    }
+});
+
+app.post('/add/user/', function (req, res) {
+    //adds a new user to the database based on the username typed in the body to the 
+    // corresponding form 
+    const username = req.body.username;
+    const password = req.body.password;
+    min = Math.ceil(10);
+    max = Math.floor(40);
+    const mysalt = Math.floor(Math.random() * (max - min) + min); 
+    hashedpassword = getHash(password, mysalt)
+
+
+
+    var rtrn = { name: username, password: hashedpassword, salt: mysalt, tamagachitimer: {tamagachifoodtimer: '', timeexitedtamagachi: ''} };
+    db.collection("users").insertOne(rtrn); // Change to ChatMessage after test
+    res.end('true'); 
+});
+
+
+app.post('/login/user/', async function (req, res, next) { // this sends true or false to the index.html page which presents the index page to the user
+    const username = req.body.username;
+    const password = req.body.password;
+
+    var user = await db.collection("users").findOne({"name": username});
+
+    if (user == null){
+        console.log('login fail');
+        res.send(false);
+    }
+
+    else{
+
+        mysalt = user.salt
+        hashedpassword = getHash(password, mysalt)
+
+        var user = await db.collection("users").findOne({name: username, password:hashedpassword});
+        if (user == null){
+            console.log('login fail');
+            res.send(false);
+        }
+        else{
+
+        console.log('login success');
+        session = req.session;
+        session.username = username;
+        res.send(true); //__dirname+ "/index.html"
+        };
+    };
+
+});
+
+app.use('/Gameplay', (req, res) => {
+        console.log('/efef')
+        session=req.session;
+        if(session.username !== undefined){
+            console.log('userfound')
+            res.sendFile(__dirname+"/Gameplay/index.html"); // if session exists:  /gameplay/idex.html
+        }
+        else{
+            console.log('user not found')
+            res.sendFile(__dirname + "/public_html/index.html"); //If session doesnt exist: login page
+        }
+});
+
+app.get('/logout/user', async function (req, res) {
+    console.log('/logout/user')
+    req.session.destroy();
+    console.log('destroyed')
+    res.send(true);
+});
+
+
+
+app.post('/save/minigame/score/', async function (req, res) {
+    //gets the full item list without my items from the database sends this to the client
+    console.log('save scores server reached')
+    session=req.session
+    myusername = session.username
+    mydata = req.body
+    game = mydata.game
+    score = mydata.score
+    newgamescore = {[game]: score}
+
+    let userobj = db.collection('users').find({name: username});
+    myscores = userobj.gamescores
+
+    let newgamescores = myscores
+
+    db.collection('users').updateOne(
+        { name: myusername},
+        { $set: {'gamescores' : newgamescore}} // need to index into object
     );
 });
 
 
 
 
+const crypto = require('crypto');
+function getHash(password, salt) {
+    var cryptoHash = crypto.createHash('sha512');
+    var toHash = password + salt;
+    var hash = cryptoHash.update(toHash, 'utf-8').digest('hex');
+    return hash;
+   
+  };
+
 app.listen(port, async function(){
     console.log(`App listening at ' + ${port}`);
   });
+
+
 
